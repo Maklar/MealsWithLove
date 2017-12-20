@@ -5,7 +5,7 @@ export default class Auth {
     auth0 = new auth0.WebAuth({
       domain: 'faithcountrychapel.auth0.com',
       clientID: 'DFVoAkJAC5A5CEfTHlMoS0GE0gx4BPF_',
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: process.env.REACT_APP_CALLBACK,
       audience: 'https://faithcountrychapel.auth0.com/userinfo',
       responseType: 'token id_token',
       scope: 'openid'
