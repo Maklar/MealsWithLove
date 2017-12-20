@@ -1,0 +1,10 @@
+.request {
+    text-align: center;
+    background: url("~/images/volunteer-bg.jpg") center center fixed;
+   -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height:100vh;  
+    color: #FFF;
+  }
