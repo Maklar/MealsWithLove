@@ -1,0 +1,21 @@
+.register {
+  position: absolute;
+  top: 50%;
+  margin-top: -250px;
+  background-color: rgba(0,0,0,.6);
+  height: 500px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.register h2 {
+    padding-top: 20px;
+    color: #FFF;
+}
+
+.register .btn-default {
+    margin-top: 15px;
+    width: 100%;
+}

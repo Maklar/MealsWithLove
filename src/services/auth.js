@@ -5,17 +5,21 @@ export default class Auth {
     auth0 = new auth0.WebAuth({
       domain: 'faithcountrychapel.auth0.com',
       clientID: 'DFVoAkJAC5A5CEfTHlMoS0GE0gx4BPF_',
-      redirectUri: process.env.REACT_APP_CALLBACK,
+      redirectUri: process.env.REACT_APP_CALLBACK || "http://localhost:3000/callback",
       audience: 'https://faithcountrychapel.auth0.com/userinfo',
       responseType: 'token id_token',
-      scope: 'openid'
+      scope: 'openid profile'
     });
+
+    userProfile;
 
     constructor() {
       this.login = this.login.bind(this);
       this.logout = this.logout.bind(this);
       this.handleAuthentication = this.handleAuthentication.bind(this);
       this.isAuthenticated = this.isAuthenticated.bind(this);
+      this.getAccessToken = this.getAccessToken.bind(this);
+      this.getProfile = this.getProfile.bind(this);
     }
 
     isAuthenticated() {
@@ -45,6 +49,25 @@ export default class Auth {
       localStorage.setItem('expires_at', expiresAt);
       // navigate to the home route
       history.replace('/home');
+    }
+
+    getAccessToken() {
+      const accessToken = localStorage.getItem('access_token');
+      if (!accessToken) {
+        throw new Error('No access token found');
+      }
+      return accessToken;
+    }
+
+    getProfile(cb) {
+      let accessToken = this.getAccessToken();
+      this.auth0.client.userInfo(accessToken, (err, profile) => {
+          if (profile) {
+              this.userProfile = profile;
+              this.userProfile.id = profile.sub.split("|")[1];
+          }
+          cb(err, profile);
+      });
     }
 
     login() {

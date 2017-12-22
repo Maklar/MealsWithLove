@@ -18,7 +18,7 @@ class Nav extends Component {
     const { isAuthenticated } = this.props.auth;
 
     return (      
-      <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mb-4">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-secondary mb-4">
         <Button bsStyle="primary" className="btn-margin" onClick={this.goTo.bind(this, 'home')}>Meals with Love</Button>
         { 
           !isAuthenticated() ?
