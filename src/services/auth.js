@@ -29,11 +29,10 @@ export default class Auth {
       return new Date().getTime() < expiresAt;
     }
 
-    handleAuthentication() {
+    handleAuthentication(callback) {
       this.auth0.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
-          this.setSession(authResult);
-          history.replace('/home');
+          this.setSession(authResult, callback);
         } else if (err) {
           history.replace('/home');
           console.log(err);
@@ -41,14 +40,30 @@ export default class Auth {
       });
     }
 
-    setSession(authResult) {
+    setSession(authResult, callback) {
       // Set the time that the access token will expire at
       let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       localStorage.setItem('access_token', authResult.accessToken);
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('expires_at', expiresAt);
-      // navigate to the home route
-      history.replace('/home');
+
+      this.getProfile(authResult.accessToken, () => {
+        callback(authResult.idToken);
+        history.replace(localStorage.getItem('return_url') || '/home');
+      });      
+    }
+
+    getProfile(token, callback) {
+      this.auth0.client.userInfo(token, (err, profile) => {
+        if (profile) {
+          this.userProfile = profile;
+          this.userProfile.id = profile.sub.split("|")[1];
+          callback(profile);
+        }
+        else { 
+          callback(null);
+        }
+      }); 
     }
 
     getAccessToken() {
@@ -57,17 +72,6 @@ export default class Auth {
         throw new Error('No access token found');
       }
       return accessToken;
-    }
-
-    getProfile(cb) {
-      let accessToken = this.getAccessToken();
-      this.auth0.client.userInfo(accessToken, (err, profile) => {
-          if (profile) {
-              this.userProfile = profile;
-              this.userProfile.id = profile.sub.split("|")[1];
-          }
-          cb(err, profile);
-      });
     }
 
     login() {

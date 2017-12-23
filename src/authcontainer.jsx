@@ -4,6 +4,7 @@ import Register from "./register/register";
 
 class AuthContainer extends Component {  
   login() {
+    localStorage.setItem("return_url", window.location.pathname);
     this.props.auth.login();
   }
 
@@ -14,22 +15,20 @@ class AuthContainer extends Component {
       user: null 
     });
 
-    const { isAuthenticated, getProfile, userProfile } = this.props.auth;
+    const { isAuthenticated, userProfile, getProfile } = this.props.auth;
     const { getUserByOAuthId } = this.props.data;
     const authenticated = isAuthenticated();
-    this.setState({...this.state, authenticated: authenticated});
+    this.setState({...this.state, authenticated: authenticated, profile: userProfile});
     
     if (authenticated) {
       if (!userProfile) {
-        getProfile((err, profile) => {
-          this.setState({...this.state, profile: profile});
+        getProfile(this.props.auth.getAccessToken(), (profile) => {
           getUserByOAuthId(profile.id, (user) => {
             this.setState({...this.state, user: user});
           });
-        })
+        });
       }
       else {
-        this.setState({...this.state, profile: userProfile})
         getUserByOAuthId(userProfile.id, (user) => {
           this.setState({...this.state, user: user});
         });

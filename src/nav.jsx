@@ -7,6 +7,7 @@ class Nav extends Component {
   }
 
   login() {
+    localStorage.setItem("return_url", window.location.pathname);
     this.props.auth.login();
   }
 
