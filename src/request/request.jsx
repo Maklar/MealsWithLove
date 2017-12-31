@@ -115,21 +115,20 @@ class Request extends Component {
       <div className="request">
         <Nav {...this.props} />
         <AuthContainer {...this.props}>
-          <Col xs={10} md={8} xsOffset={1} msoffset={1}>
+          <Col xs={12} md={6} mdOffset={3}>
             <Form horizontal onSubmit={this.handleOnSubmit}>
               <Panel header="Request meal(s) for someone who could use a little help">
-                <FormGroup>
-                  <Text id="name" label="Request a meal for" placeholder="Name (first and last)" sub="request_for" onChange={this.handleInputChange} />
-                  <Text id="address" label="Deliver meals to" placeholder="Address" sub="request_for" onChange={this.handleInputChange} />
-                  <DropDown id="best_contact_method" label="Best Contact Method" placeholder="Select" options={contactMethods} sub="request_for" onChange={this.handleInputChange} />
-                  {contact}
-                  <List id="food_allergies" label="Food Allergies" addlabel="Add Food Allergy" placeholder="Allergy" sub="request_for" onChange={this.handleInputChange}/>
-                  <hr />
-                  <DropDown id="reason" label="Reason for Request" placeholder="Select" options={reasons} onChange={this.handleInputChange} />
-                  <DateRange id="meal_dates" label="Dates for meals:" events={meals} onChange={this.handleDateInputChange} />
-                  
-                  <Button type="submit">Submit</Button>
-                </FormGroup>
+                
+                <Text id="name" label="Request a meal for" placeholder="Name (first and last)" sub="request_for" onChange={this.handleInputChange} />
+                <Text id="address" label="Deliver meals to" placeholder="Address" sub="request_for" onChange={this.handleInputChange} />
+                <DropDown id="best_contact_method" label="Best Contact Method" placeholder="Select" options={contactMethods} sub="request_for" onChange={this.handleInputChange} />
+                {contact}
+                <List id="food_allergies" label="Food Allergies" addlabel="Add Food Allergy" placeholder="Allergy" sub="request_for" onChange={this.handleInputChange}/>
+                <hr />
+                <DropDown id="reason" label="Reason for Request" placeholder="Select" options={reasons} onChange={this.handleInputChange} />
+                <DateRange id="meal_dates" label="Dates for meals:" events={meals} onChange={this.handleDateInputChange} />
+                
+                <Button type="submit">Submit</Button>
               </Panel>
             </Form>
           </Col>
