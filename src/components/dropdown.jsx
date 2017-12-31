@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Nav from "../nav";
-import AuthContainer from "../authcontainer";
 import { FormGroup, FormControl, ControlLabel, HelpBlock, Col } from "react-bootstrap";
 
 class DropDown extends Component {
@@ -24,15 +22,14 @@ class DropDown extends Component {
   }
 
   render() {
-    const { value } = this.state;
     const { id, help, label, options, placeholder } = this.props;
 
     return (
       <FormGroup>
-        <Col componentClass={ControlLabel} sm={2}>
+        <Col componentClass={ControlLabel} sm={1} xs={1}>
           {label}
         </Col>
-        <Col sm={8}>
+        <Col sm={10} xs={10}>
           <FormControl id={id} componentClass="select" placeholder={placeholder} {...this.props} onChange={this.handleInputChange}>
             {options.map((e) => <option value={e.value} key={e.value}>{e.text}</option>)}          
           </FormControl>

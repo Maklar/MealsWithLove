@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Nav from "../nav";
-import AuthContainer from "../authcontainer";
-import { FormGroup, FormControl, ControlLabel, HelpBlock, Button, Col, ListGroup, ListGroupItem } from "react-bootstrap";
+import { FormGroup, FormControl, InputGroup, HelpBlock, Button, Col, ListGroup, ListGroupItem } from "react-bootstrap";
 
 class List extends Component {
   constructor() {
@@ -15,6 +13,7 @@ class List extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAddToList = this.handleAddToList.bind(this);
     this.handleDeleteFromList = this.handleDeleteFromList.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   getValue() {
@@ -30,7 +29,7 @@ class List extends Component {
   handleDeleteFromList(event) {
     const { items } = this.state;
        
-    var newItems = this.state.items.filter(e => e !== event.target.innerText);
+    var newItems = items.filter(e => e !== event.target.innerText);
     this.setState({
         items: newItems
     });
@@ -55,27 +54,30 @@ class List extends Component {
     }
   }
 
+  handleKeyUp(event) {
+    if (event.key === "Enter") {
+      this.handleAddToList(event);
+    }
+  }
+
   render() {
     const { items, newItem } = this.state;
-    const { id, help, label, addlabel, placeholder } = this.props;
+    const { id, help, addlabel, placeholder } = this.props;
 
     return (
       <FormGroup controlId={id}>
-        <Col componentClass={ControlLabel} sm={2}>
-          {label}
-        </Col>
-        <Col sm={8}>
+        <Col sm={10} xs={10} xsOffset={1}>
           <ListGroup>
             {items.map(e => <ListGroupItem bsStyle="warning" key={e} onClick={this.handleDeleteFromList}>{e}</ListGroupItem>)}
           </ListGroup>
         </Col>
         {help && <HelpBlock>{help}</HelpBlock>}
     
-        <Col sm={6} smOffset={2}>
-          <FormControl type="text" placeholder={placeholder} value={newItem || ""} onChange={this.handleInputChange} />
-        </Col>
-        <Col sm={2}>
-          <Button onClick={this.handleAddToList} {...this.props}>{addlabel}</Button>
+        <Col sm={10} xs={10} xsOffset={1}>
+          <FormControl type="text" placeholder={placeholder} value={newItem || ""} onChange={this.handleInputChange} onKeyUp={this.handleKeyUp} />
+          <InputGroup>
+            <InputGroup.Button><Button onClick={this.handleAddToList} {...this.props}>{addlabel}</Button></InputGroup.Button>
+          </InputGroup>
         </Col>
       </FormGroup>
     );

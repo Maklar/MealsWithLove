@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Nav from "../nav";
-import AuthContainer from "../authcontainer";
-import { FormGroup, FormControl, ControlLabel, HelpBlock, Col } from "react-bootstrap";
+import { FormGroup, FormControl, HelpBlock, Col } from "react-bootstrap";
 
 class Text extends Component {
   constructor() {
@@ -25,14 +23,11 @@ class Text extends Component {
 
   render() {
     const { value } = this.state;
-    const { id, help, label, placeholder } = this.props;
+    const { id, help, placeholder } = this.props;
 
     return (
       <FormGroup controlId={id}>
-        <Col componentClass={ControlLabel} sm={2}>
-          {label}
-        </Col>
-        <Col sm={8}>
+        <Col sm={10} xs={10} xsOffset={1} smOffset={1}>
           <FormControl value={value} {...this.props} placeholder={placeholder} onChange={this.handleInputChange} />
         </Col>
         {help && <HelpBlock>{help}</HelpBlock>}

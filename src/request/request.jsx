@@ -74,13 +74,12 @@ class Request extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
-    this.props.data.createNewRequest(this.state, () => {
-      this.props.history.replace(`/home`);
-    });
-      
+    if (document.activeElement.attributes["type"] === "submit") {
+      this.props.data.createNewRequest(this.state, () => {
+        this.props.history.replace(`/home`);
+      });      
+    }
   }
-
-  handleMeal
 
   render() {
     const { best_contact_method } = this.state.request_for;
@@ -116,7 +115,7 @@ class Request extends Component {
       <div className="request">
         <Nav {...this.props} />
         <AuthContainer {...this.props}>
-          <Col xs={12} md={8} xsOffset={2} msoffset={1}>
+          <Col xs={10} md={8} xsOffset={1} msoffset={1}>
             <Form horizontal onSubmit={this.handleOnSubmit}>
               <Panel header="Request meal(s) for someone who could use a little help">
                 <FormGroup>
