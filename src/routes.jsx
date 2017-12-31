@@ -1,13 +1,11 @@
 import React from 'react';
-import { Router, Route, Link } from 'react-router-dom';
-import { Navbar, Button } from 'react-bootstrap';
+import { Router, Route } from 'react-router-dom';
 import Volunteer from "./volunteer/volunteer";
 import Home from "./home/home";
 import Request from "./request/request";
 import Callback from "./callback/callback";
 import Auth from "./services/auth";
 import Data from "./services/data";
-import App from "./App";
 import history from "./history";
 
 const auth = new Auth();

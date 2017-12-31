@@ -33,4 +33,8 @@ export default class Data  {
   createUserWithOAuthId(user) {
     axios.post("/users", user);
   }
+
+  createNewRequest(request, callback) {
+    axios.post("/requests", request).then(callback).catch((err) => { alert(err);});
+  }
 }
