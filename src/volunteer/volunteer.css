@@ -1,10 +1,62 @@
-.request {
-    text-align: center;
-    background: url("~/images/volunteer-bg.jpg") center center fixed;
-   -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height:100vh;  
-    color: #FFF;
-  }
+.volunteer {
+  text-align: center;
+  background: url("../images/volunteer-bg.jpg") center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:100vh;
+}
+
+  
+
+.volunteer .panel {
+  background-color: rgba(200,200,150,.6);
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.volunteer .panel-body {
+  height: calc(100% - 30px);
+  max-height: 500px;
+}
+
+.volunteer .month {
+  text-align: center;
+}
+
+.volunteer .day {
+  background-color: rgba(255,255,255,.6);
+}
+
+.volunteer .dayz.month .days .day.outside {
+  background-color: rgba(210,210,178,.6);
+}
+.volunteer .day .label {
+  color: #000;
+}
+
+.volunteer .day.outside .label {
+  color: #888;
+}
+
+
+
+
+.volunteer .panel::-webkit-scrollbar {
+  width: 1em;
+}
+
+.volunteer .panel::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.volunteer .panel::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.volunteer .dayz .event {
+  cursor: pointer;
+}

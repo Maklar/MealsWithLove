@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { Button } from "react-bootstrap";
 import Register from "./register/register";
 
-class AuthContainer extends Component {  
+class AuthContainer extends Component {
+  constructor() {
+    super();
+    
+    this.loadUserFromProfile = this.loadUserFromProfile.bind(this);
+  }
+
   login() {
     localStorage.setItem("return_url", window.location.pathname);
     this.props.auth.login();
@@ -16,24 +22,30 @@ class AuthContainer extends Component {
     });
 
     const { isAuthenticated, userProfile, getProfile } = this.props.auth;
-    const { getUserByOAuthId } = this.props.data;
     const authenticated = isAuthenticated();
     this.setState({...this.state, authenticated: authenticated, profile: userProfile});
     
     if (authenticated) {
       if (!userProfile) {
         getProfile(this.props.auth.getAccessToken(), (profile) => {
-          getUserByOAuthId(profile.id, (user) => {
-            this.setState({...this.state, user: user});
-          });
+          this.loadUserFromProfile(profile.id);
         });
       }
       else {
-        getUserByOAuthId(userProfile.id, (user) => {
-          this.setState({...this.state, user: user});
-        });
+        this.loadUserFromProfile(userProfile.id);
       }
     }
+  }
+
+  loadUserFromProfile(profileId) {
+    const { getUserByOAuthId } = this.props.data;
+    
+    getUserByOAuthId(profileId, (user) => {
+      this.setState({...this.state, user: user});
+      if (this.props.onAuthenticated) {
+        this.props.onAuthenticated();
+      }
+    })
   }
 
   render() {

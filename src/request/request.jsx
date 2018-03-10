@@ -74,7 +74,7 @@ class Request extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
-    if (document.activeElement.attributes["type"] === "submit") {
+    if (document.activeElement.attributes["type"].value === "submit") {
       this.props.data.createNewRequest(this.state, () => {
         this.props.history.replace(`/home`);
       });      

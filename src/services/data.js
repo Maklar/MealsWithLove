@@ -37,4 +37,34 @@ export default class Data  {
   createNewRequest(request, callback) {
     axios.post("/requests", request).then(callback).catch((err) => { alert(err);});
   }
+
+  getRequest(requestId, callback) {
+    axios.get(`/request/${requestId}`)
+      .then((res) => {
+        if (res.status !== 200) {
+          alert("Something went wrong retrieving request");
+        }
+        else {
+          callback(res.data);
+        }
+      })
+      .catch((err) => { alert(err); });
+  }
+
+  volunteer(requestId, mealIndex, volunteerId, callback) {
+    axios.post("/request/volunteer", { requestId, mealIndex, volunteerId }).then(callback).catch((err) => { alert(err);});
+  }
+
+  getRequests(callback) {
+    axios.get("/requests")
+      .then((res) => {
+        if (res.status !== 200) {
+          alert("Status did not indicate a success");
+        }
+        else {      
+          callback(res.data);
+        }
+      })
+      .catch((err) => { alert(err); });
+  }
 }
